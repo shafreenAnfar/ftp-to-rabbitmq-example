@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: some-rabbit-mgt
+    hostname: my-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+
+  ftp:
+    image: stilliard/pure-ftpd
+    environment:
+      - FTP_USER_NAME=user1
+      - FTP_USER_PASS=pass456
+      - FTP_USER_HOME=/home/ballerina
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+
+  icp:
+    image: 'wso2/wso2-integration-control-plane'
+    container_name: icp
+    network_mode: "host"
+    ports:
+      - 9743:9743
+      - 9264:9264
